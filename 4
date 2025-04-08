@@ -1,0 +1,41 @@
+def generatePathsMainRecursion(n):
+    # Базові випадки
+    if n == 0:
+        return 1, [[]]  # Один спосіб бути на верхівці без кроків
+    if n == 1:
+        return 1, [[1]]  # Один спосіб піднятися, зробивши 1 крок
+
+    # Рекурсивний виклик для n-1 і n-2
+    ways_n_minus_1, paths_n_minus_1 = generatePathsMainRecursion(n - 1)
+    ways_n_minus_2, paths_n_minus_2 = generatePathsMainRecursion(n - 2)
+
+    # Створення нових шляхів, додаючи 1 до всіх шляхів з n-1 та 2 до всіх шляхів з n-2
+    new_paths_1 = [path + [1] for path in paths_n_minus_1]
+    new_paths_2 = [path + [2] for path in paths_n_minus_2]
+
+    # Загальна кількість способів
+    total_ways = ways_n_minus_1 + ways_n_minus_2
+    # Список всіх можливих шляхів
+    all_paths = new_paths_1 + new_paths_2
+
+    return total_ways, all_paths
+
+# Введення значення n з перевіркою на обмеження
+while True:
+    n = int(input("Введіть кількість сходів (n): "))
+    if 1 <= n <= 45:
+        break
+    else:
+        print("Число повинно бути в межах від 1 до 45. Спробуйте ще раз.")
+
+# Генерація всіх можливих шляхів
+result, paths = generatePathsMainRecursion(n)
+
+# Виведення результату
+print(f"\nКількість унікальних способів піднятися на вершину: {result}")
+
+# Пояснення рішення
+print("\nПояснення:")
+print(f"There are {result} ways to climb to the top.")
+for path in paths:
+    print(" + ".join([f"{step} step" for step in path]))

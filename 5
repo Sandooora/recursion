@@ -1,0 +1,41 @@
+def pow_main(x, n):
+    if n == 0:
+        return 1
+    elif n > 0:
+        return x * pow_main(x, n - 1)
+    else:
+        return 1 / pow_main(x, -n)
+
+def pow_tail(x, n):
+    def helper(x, n, result):
+        if n == 0:
+            return result
+        elif n > 0:
+            return helper(x, n - 1, result * x)
+        else:
+            return helper(x, n + 1, result / x)
+    
+    return helper(x, n, 1)
+
+# Введення даних користувачем
+x = float(input("Введіть число x: "))
+n = int(input("Введіть степінь n: "))
+
+# Перевірки
+if x <= -100.0 or x >= 100.0:
+    print("Помилка: x повинно бути в межах від -100 до 100.")
+elif n < -2**31 or n > 2**31 - 1:
+    print("Помилка: n повинно бути в межах від -2^31 до 2^31 - 1.")
+elif x == 0 and n <= 0:
+    print("Помилка: x не може бути 0, якщо n <= 0.")
+else:
+    # Виклик функцій
+    result_main = pow_main(x, n)
+    result_tail = pow_tail(x, n)
+
+    # Перевірка на межі результату
+    if abs(result_main) > 10**4 or abs(result_tail) > 10**4:
+        print("Помилка: результат виходить за межі від -10^4 до 10^4.")
+    else:
+        print(f"Головна рекурсія: {result_main}")
+        print(f"Хвостова рекурсія: {result_tail}")
