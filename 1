@@ -1,0 +1,11 @@
+def reverse_string_main_recursion(s):
+    # Базовий випадок: якщо рядок порожній, повертаємо порожній рядок
+    if s == "":
+        return s
+    # Рекурсивний виклик: додаємо останній символ до результату з решти рядка
+    return reverse_string_main_recursion(s[1:]) + s[0]
+
+# Запитуємо користувача ввести слово
+input_string = input("Введіть слово: ")
+output_string = reverse_string_main_recursion(input_string)
+print("Зворотне слово:", output_string)
