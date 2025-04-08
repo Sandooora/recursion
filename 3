@@ -1,0 +1,37 @@
+def fibonacci_recursive(n):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
+
+def fibonacci_tail_recursive(n, a=0, b=1):
+    if n == 0:
+        return a
+    if n == 1:
+        return b
+    return fibonacci_tail_recursive(n - 1, b, a + b)
+
+def build_explanation(n):
+    if n == 0:
+        return "F(0) = 0"
+    if n == 1:
+        return "F(1) = 1"
+    return f"F({n}) = F({n-1}) + F({n-2})"
+
+# --- Ввід користувача ---
+try:
+    n = int(input("Введіть число n для обчислення F(n): "))
+    if n < 0:
+        print("Число повинно бути невід'ємним!")
+    else:
+        result1 = fibonacci_recursive(n)
+        result2 = fibonacci_tail_recursive(n)
+        explanation = build_explanation(n)
+
+        print(f"\n--- Результати для F({n}) ---")
+        print(f"Головна рекурсія: {result1}")
+        print(f"Хвостова рекурсія: {result2}")
+        print(f"Explanation: {explanation}")
+except ValueError:
+    print("Будь ласка, введіть ціле число.")
